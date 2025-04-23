@@ -3,57 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Manager Portfolio</title>
+    <title>Sunil Mallela - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <nav>
         <div class="nav-content">
-            <div class="logo">Your Name</div>
+            <div class="logo">Sunil Mallela</div>
             <div class="nav-links">
-                <a href="#work">Work</a>
-                <a href="#resume">Resume</a>
+                <a href="index.html">Home</a>
                 <a href="#about">About</a>
-                <a href="#contact">Contact</a>
+                <a href="education.html">Education</a>
+                <a href="work.html">Work Experience</a>
+                <a href="#accomplishments">Accomplishments</a>
+                <span class="separator">|</span>
+                <a href="#resume">Resume</a>
+                <a href="#contact">Connect</a>
             </div>
         </div>
     </nav>
 
-    <header>
+    <header id="home">
         <div class="hero-content">
-            <h1>Product Manager</h1>
-            <p>Building great products that make a difference</p>
+            <h1>Product Manager Portfolio</h1>
+            <p>— Building innovative products that make a difference</p>
         </div>
     </header>
-
-    <section id="work" class="work-section">
-        <h2>Featured Work</h2>
-        <div class="work-grid">
-            <div class="work-card">
-                <h3>Project 1</h3>
-                <p>Description of your project and your role</p>
-            </div>
-            <div class="work-card">
-                <h3>Project 2</h3>
-                <p>Description of your project and your role</p>
-            </div>
-            <div class="work-card">
-                <h3>Project 3</h3>
-                <p>Description of your project and your role</p>
-            </div>
-        </div>
-    </section>
 
     <section id="about" class="about-section">
         <h2>About Me</h2>
         <div class="about-content">
-            <p>Write a compelling story about yourself, your experience, and what drives you as a product manager.</p>
+            <div class="profile-container">
+                <div class="profile-picture" id="profilePic">
+                    <img src="assets/profile.jpg" alt="Sunil Mallela">
+                    <div class="popup-trigger">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                </div>
+                <div class="popup" id="profilePopup">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <div class="popup-header">
+                            <img src="assets/profile-small.jpg" alt="Sunil Mallela" class="popup-avatar">
+                            <h3>Can I help you?</h3>
+                        </div>
+                        <div class="popup-body">
+                            <p>Hi! I'm Sunil Mallela, a Product Manager passionate about building innovative solutions.</p>
+                            <div class="popup-actions">
+                                <a href="#contact" class="popup-button">Let's Connect</a>
+                                <a href="#resume" class="popup-button secondary">View Resume</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-text">
+                <p>Write a compelling story about yourself, your experience, and what drives you as a product manager.</p>
+                <div class="skills-container">
+                    <h3>Core Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Product Strategy</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-users"></i>
+                            <span>User Research</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>Agile Management</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Innovation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <blockquote>
+                        "Add a testimonial from a colleague or manager here."
+                    </blockquote>
+                    <cite>— Person Name, Position @ Company</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="accomplishments" class="accomplishments-section">
+        <h2>Accomplishments</h2>
+        <div class="accomplishments-content">
+            <!-- Add your accomplishments here -->
+        </div>
+    </section>
+
+    <section id="resume" class="resume-section">
+        <h2>Resume</h2>
+        <div class="resume-content">
+            <!-- Add your resume content or download button here -->
         </div>
     </section>
 
     <section id="contact" class="contact-section">
-        <h2>Get in Touch</h2>
+        <h2>Connect</h2>
         <div class="contact-links">
             <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i></a>
             <a href="https://linkedin.com/in/yourprofile"><i class="fab fa-linkedin"></i></a>
@@ -62,7 +115,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2024 Your Name. All rights reserved.</p>
+        <p>&copy; 2024 Sunil Mallela. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
