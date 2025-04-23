@@ -109,6 +109,55 @@ document.addEventListener('DOMContentLoaded', function() {
 // Chat Interface Functions
 const chatMessages = document.getElementById('chatMessages');
 
+// Add interaction tracking
+const userInteractions = {
+    education: 0,
+    work: 0,
+    accomplishments: 0,
+    quickIntro: 0,
+    connect: 0
+};
+
+// Varied responses for repeated interactions
+const repeatResponses = {
+    education: [
+        "Back to education! 📚 Let me show you that beautiful book animation again!",
+        "You seem really interested in my education! Here's another look at my academic journey 🎓",
+        "Third time's a charm! 🌟 I love your enthusiasm about my education background!",
+        "Wow, you're really thorough! 🤓 Let's explore my education path once more!"
+    ],
+    work: [
+        "Let's look at my work experience again! 💼",
+        "Back to my professional journey! 🚀 I'm glad you're interested!",
+        "You must be really interested in my work! 💫 Happy to show you again!",
+        "Another deep dive into my work experience! 🎯 I appreciate your thoroughness!"
+    ],
+    accomplishments: [
+        "Let's celebrate these achievements again! 🏆",
+        "Back to the trophy cabinet! ✨ Always happy to share my proudest moments!",
+        "Third time looking at accomplishments! 🌟 You're making me blush!",
+        "Wow, you really like my achievements! 🎉 Let's review them once more!"
+    ],
+    quickIntro: [
+        "Happy to introduce myself again! 👋",
+        "Round two of introductions! 😊 You're very thorough!",
+        "Third introduction's the charm! 🌟 You must really want to know me well!",
+        "Another intro! 🤝 I appreciate your attention to detail!"
+    ],
+    connect: [
+        "Always happy to connect again! 🤝",
+        "Looking for more ways to connect? Let's explore! 🌟",
+        "You're really interested in connecting! That's awesome! 💫",
+        "I love your enthusiasm for networking! 🎯"
+    ]
+};
+
+function getResponse(section) {
+    const count = userInteractions[section];
+    const responses = repeatResponses[section];
+    return responses[Math.min(count, responses.length - 1)];
+}
+
 function addMessage(message, isBot = true) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${isBot ? 'message-bot' : 'message-user'}`;
@@ -118,15 +167,30 @@ function addMessage(message, isBot = true) {
     return messageDiv;
 }
 
+function showSection(sectionId) {
+    document.querySelectorAll('section[id]').forEach(section => {
+        if (section.id !== 'home' && section.id !== 'about' && section.id !== 'contact') {
+            section.style.display = 'none';
+        }
+    });
+    
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 function addOptions(parentMessage) {
     const optionsContainer = document.createElement('div');
     optionsContainer.className = 'chat-options-container';
     
     const options = [
-        { icon: '👤', text: 'About Me', action: showAboutMe },
-        { icon: '⭐', text: 'My Skills', action: showSkills },
-        { icon: '❤️', text: 'My Interests', action: showInterests },
-        { icon: '📱', text: 'Contact Me', action: showContact }
+        { icon: '👋', text: 'Quick Intro', action: showQuickIntro, track: 'quickIntro' },
+        { icon: '🎓', text: 'Education', action: showEducationSection, track: 'education' },
+        { icon: '💼', text: 'Work Experience', action: showWorkSection, track: 'work' },
+        { icon: '🏆', text: 'Accomplishments', action: showAccomplishmentsSection, track: 'accomplishments' },
+        { icon: '🤝', text: "Let's Connect", action: showConnect, track: 'connect' }
     ];
 
     options.forEach(option => {
@@ -134,11 +198,9 @@ function addOptions(parentMessage) {
         optionButton.className = 'chat-option-inline';
         optionButton.innerHTML = `${option.icon} ${option.text}`;
         optionButton.addEventListener('click', () => {
-            // Add user's selection as a message
             addMessage(option.text, false);
-            // Call the corresponding action
+            userInteractions[option.track]++;
             option.action();
-            // Remove the options after selection
             optionsContainer.remove();
         });
         optionsContainer.appendChild(optionButton);
@@ -148,67 +210,206 @@ function addOptions(parentMessage) {
 }
 
 function showWelcomeMessage() {
-    const welcomeMsg = addMessage("Hello! It's lovely to see you here 😊 What would you like to know about me?");
+    const welcomeMsg = addMessage("Hi there! 👋 I'm Sunil, a Product Manager. How can I help you today?");
     addOptions(welcomeMsg);
 }
 
-function showAboutMe() {
-    addMessage('I am a Product Manager with experience in building innovative solutions. I am passionate about creating products that make a difference.');
+function showEducationSection() {
+    const response = getResponse('education');
+    addMessage(response);
     setTimeout(() => {
-        const followUpMsg = addMessage("Would you like to know more about me?");
+        showSection('education');
+        const followUpMessages = [
+            "What aspect of my education interests you the most?",
+            "Would you like to know about my other experiences?",
+            "Anything specific you'd like to know about my studies?",
+            "Feel free to ask me anything about my academic journey!"
+        ];
+        const followUpMsg = addMessage(followUpMessages[Math.min(userInteractions.education, followUpMessages.length - 1)]);
         addOptions(followUpMsg);
     }, 1000);
 }
 
-function showSkills() {
-    const skills = [
-        '✨ Product Strategy',
-        '🔍 User Research',
-        '📊 Data Analytics',
-        '👥 Team Leadership',
-        '🎯 Agile Management'
+function showWorkSection() {
+    const response = getResponse('work');
+    addMessage(response);
+    setTimeout(() => {
+        showSection('work');
+        const followUpMessages = [
+            "What would you like to know about my work experience?",
+            "Any specific project you'd like to hear about?",
+            "I have many interesting work stories - want to hear more?",
+            "Always excited to share my professional journey!"
+        ];
+        const followUpMsg = addMessage(followUpMessages[Math.min(userInteractions.work, followUpMessages.length - 1)]);
+        addOptions(followUpMsg);
+    }, 1000);
+}
+
+function showAccomplishmentsSection() {
+    const response = getResponse('accomplishments');
+    addMessage(response);
+    setTimeout(() => {
+        showSection('accomplishments');
+        const followUpMessages = [
+            "What else would you like to explore?",
+            "Which achievement would you like to know more about?",
+            "Each achievement has a unique story - interested in any particular one?",
+            "Thanks for your interest in my journey!"
+        ];
+        const followUpMsg = addMessage(followUpMessages[Math.min(userInteractions.accomplishments, followUpMessages.length - 1)]);
+        addOptions(followUpMsg);
+    }, 1000);
+}
+
+function showQuickIntro() {
+    const response = getResponse('quickIntro');
+    addMessage(response);
+    const introMessages = [
+        ["🎯 Product Manager with 5+ years of experience",
+         "💡 Passionate about user-centric design and innovation",
+         "🌱 Currently working on exciting projects in tech"],
+        ["✨ Love turning ideas into impactful products",
+         "🚀 Experienced in leading cross-functional teams",
+         "🎨 Passionate about beautiful, functional design"],
+        ["🌟 Specialized in AI-driven products",
+         "🤝 Built strong partnerships with industry leaders",
+         "📈 Proven track record of successful launches"],
+        ["💫 Always learning and growing",
+         "🎯 Focus on user-centric solutions",
+         "🌱 Passionate about mentoring"]
     ];
     
-    skills.forEach((skill, index) => {
-        setTimeout(() => addMessage(skill), index * 500);
+    const currentIntro = introMessages[Math.min(userInteractions.quickIntro, introMessages.length - 1)];
+    currentIntro.forEach((msg, index) => {
+        setTimeout(() => addMessage(msg), (index + 1) * 500);
     });
-
-    setTimeout(() => {
-        const followUpMsg = addMessage("What else would you like to know?");
-        addOptions(followUpMsg);
-    }, (skills.length + 1) * 500);
-}
-
-function showInterests() {
-    addMessage('My Interests:');
-    const interests = [
-        '📚 Technology Trends',
-        '🎨 User Experience Design',
-        '🌱 Sustainable Innovation'
-    ];
-
-    interests.forEach((interest, index) => {
-        setTimeout(() => addMessage(interest), (index + 1) * 500);
-    });
-
-    setTimeout(() => {
-        const followUpMsg = addMessage("Anything else you'd like to explore?");
-        addOptions(followUpMsg);
-    }, (interests.length + 2) * 500);
-}
-
-function showContact() {
-    addMessage('Get in touch with me:');
-    setTimeout(() => addMessage('📧 Email: your.email@example.com'), 500);
-    setTimeout(() => addMessage('🔗 LinkedIn: linkedin.com/in/yourprofile'), 1000);
     
     setTimeout(() => {
-        const followUpMsg = addMessage("Would you like to know anything else?");
+        const followUpMsg = addMessage("What would you like to know more about?");
         addOptions(followUpMsg);
-    }, 1500);
+    }, (currentIntro.length + 1) * 500);
 }
 
-// Initialize chat when page loads
+function showConnect() {
+    const response = getResponse('connect');
+    const connectMsg = addMessage(response);
+    const connectOptions = [
+        { icon: '📧', text: 'Email', action: () => window.location.href = 'mailto:your.email@example.com' },
+        { icon: '🔗', text: 'LinkedIn', action: () => window.open('https://linkedin.com/in/yourprofile', '_blank') },
+        { icon: '📝', text: 'Download Resume', action: () => window.open('resume.pdf', '_blank') },
+        { icon: '📅', text: 'Schedule Meeting', action: showScheduler }
+    ];
+    
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'chat-options-container';
+    
+    connectOptions.forEach(option => {
+        const optionButton = document.createElement('button');
+        optionButton.className = 'chat-option-inline';
+        optionButton.innerHTML = `${option.icon} ${option.text}`;
+        optionButton.addEventListener('click', () => {
+            addMessage(option.text, false);
+            option.action();
+            optionsContainer.remove();
+        });
+        optionsContainer.appendChild(optionButton);
+    });
+    
+    connectMsg.appendChild(optionsContainer);
+}
+
+function showScheduler() {
+    addMessage("You can schedule a meeting with me using my Calendly:");
+    setTimeout(() => {
+        const meetingMsg = addMessage("Select a meeting type:");
+        const meetingOptions = [
+            { icon: '☕', text: '15min Coffee Chat', action: () => window.open('your-calendly-link-15min', '_blank') },
+            { icon: '💼', text: '30min Business Talk', action: () => window.open('your-calendly-link-30min', '_blank') }
+        ];
+        
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'chat-options-container';
+        
+        meetingOptions.forEach(option => {
+            const optionButton = document.createElement('button');
+            optionButton.className = 'chat-option-inline';
+            optionButton.innerHTML = `${option.icon} ${option.text}`;
+            optionButton.addEventListener('click', () => {
+                addMessage(option.text, false);
+                option.action();
+                optionsContainer.remove();
+            });
+            optionsContainer.appendChild(optionButton);
+        });
+        
+        meetingMsg.appendChild(optionsContainer);
+    }, 500);
+}
+
+// Chat container controls
 document.addEventListener('DOMContentLoaded', () => {
+    const chatContainer = document.querySelector('.chat-container');
+    const chatLauncher = document.querySelector('.chat-launcher');
+    const archiveButton = document.querySelector('.archive-chat');
+    const launchButton = document.querySelector('.launch-chat-btn');
+    const chatHeader = document.querySelector('.chat-header');
+    const chatMessages = document.querySelector('.chat-messages');
+
+    // Initialize chat
     showWelcomeMessage();
+
+    // Archive button functionality
+    archiveButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent header click event
+        chatContainer.classList.add('minimized');
+        chatMessages.style.display = 'none';
+    });
+
+    // Launch button functionality
+    launchButton.addEventListener('click', () => {
+        chatLauncher.style.display = 'none';
+        chatContainer.classList.remove('minimized');
+        chatMessages.style.display = 'block';
+    });
+
+    // Minimize/Maximize on header click
+    chatHeader.addEventListener('click', (e) => {
+        // Only toggle if not clicking archive button
+        if (!e.target.closest('.archive-chat')) {
+            if (chatContainer.classList.contains('minimized')) {
+                chatMessages.style.display = 'block';
+                // Add a small delay to ensure smooth animation
+                setTimeout(() => {
+                    chatContainer.classList.remove('minimized');
+                }, 10);
+            } else {
+                chatContainer.classList.add('minimized');
+                // Add delay before hiding messages
+                setTimeout(() => {
+                    if (chatContainer.classList.contains('minimized')) {
+                        chatMessages.style.display = 'none';
+                    }
+                }, 300); // Match the CSS transition duration
+            }
+        }
+    });
+
+    // Store chat state in localStorage
+    window.addEventListener('beforeunload', () => {
+        const chatState = {
+            isMinimized: chatContainer.classList.contains('minimized')
+        };
+        localStorage.setItem('chatState', JSON.stringify(chatState));
+    });
+
+    // Restore chat state on page load
+    const savedState = localStorage.getItem('chatState');
+    if (savedState) {
+        const chatState = JSON.parse(savedState);
+        if (chatState.isMinimized) {
+            chatContainer.classList.add('minimized');
+            chatMessages.style.display = 'none';
+        }
+    }
 }); 

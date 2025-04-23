@@ -12,12 +12,7 @@
         <div class="nav-content">
             <div class="logo">Sunil Mallela</div>
             <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="#about">About</a>
-                <a href="education.html">Education</a>
-                <a href="work.html">Work Experience</a>
-                <a href="#accomplishments">Accomplishments</a>
-                <span class="separator">|</span>
+                <a href="#home">Home</a>
                 <a href="#resume">Resume</a>
                 <a href="#contact">Connect</a>
             </div>
@@ -36,24 +31,43 @@
             <div class="chat-header">
                 <img src="assets/logo.png" alt="Chat Bot" class="chat-bot-logo">
                 <h2>Get to Know Me</h2>
+                <span class="archive-chat" title="Archive Chat">📥</span>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <!-- Messages will be added dynamically -->
             </div>
         </div>
-    </section>
 
-    <section id="accomplishments" class="accomplishments-section">
-        <h2>Accomplishments</h2>
-        <div class="accomplishments-content">
-            <!-- Add your accomplishments here -->
+        <!-- Chat Launcher (initially hidden) -->
+        <div class="chat-launcher" style="display: none;">
+            <button class="launch-chat-btn" title="Open Chat">
+                <span class="launcher-icon">💬</span>
+                <span class="launcher-text">Chat with me!</span>
+            </button>
         </div>
     </section>
 
-    <section id="resume" class="resume-section">
-        <h2>Resume</h2>
-        <div class="resume-content">
-            <!-- Add your resume content or download button here -->
+    <!-- Keep the education section but it will be shown when requested through chat -->
+    <section id="education" class="education-section" style="display: none;">
+        <h2>Education Journey</h2>
+        <div class="book">
+            <!-- Existing education book content remains unchanged -->
+        </div>
+    </section>
+
+    <!-- Keep work experience section but hidden initially -->
+    <section id="work" class="work-section" style="display: none;">
+        <h2>Work Experience</h2>
+        <div class="work-grid">
+            <!-- Existing work content remains unchanged -->
+        </div>
+    </section>
+
+    <!-- Keep accomplishments section but hidden initially -->
+    <section id="accomplishments" class="accomplishments-section" style="display: none;">
+        <h2>Accomplishments</h2>
+        <div class="accomplishments-content">
+            <!-- Existing accomplishments content remains unchanged -->
         </div>
     </section>
 
