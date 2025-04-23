@@ -708,4 +708,135 @@ footer {
     .skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
+}
+
+/* Chat Interface Styles */
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.chat-header {
+    background: #ff69b4;
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chat-bot-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.chat-messages {
+    padding: 20px;
+    height: 500px;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.message {
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s forwards;
+}
+
+.message-bot {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 15px 15px 15px 0;
+    max-width: 80%;
+    margin-right: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.message-user {
+    background: #ff69b4;
+    color: white;
+    padding: 15px;
+    border-radius: 15px 15px 0 15px;
+    max-width: 80%;
+    margin-left: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chat-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.chat-option {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chat-option:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chat-container {
+        margin: 10px;
+        border-radius: 10px;
+    }
+    
+    .chat-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chat-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.chat-option-inline {
+    background: #fff;
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chat-option-inline:hover {
+    background: #ff69b4;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.chat-option-inline i {
+    font-size: 1.1em;
 } 

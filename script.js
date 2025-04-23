@@ -104,4 +104,111 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
         }, 100);
     });
+});
+
+// Chat Interface Functions
+const chatMessages = document.getElementById('chatMessages');
+
+function addMessage(message, isBot = true) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${isBot ? 'message-bot' : 'message-user'}`;
+    messageDiv.textContent = message;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return messageDiv;
+}
+
+function addOptions(parentMessage) {
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'chat-options-container';
+    
+    const options = [
+        { icon: '👤', text: 'About Me', action: showAboutMe },
+        { icon: '⭐', text: 'My Skills', action: showSkills },
+        { icon: '❤️', text: 'My Interests', action: showInterests },
+        { icon: '📱', text: 'Contact Me', action: showContact }
+    ];
+
+    options.forEach(option => {
+        const optionButton = document.createElement('button');
+        optionButton.className = 'chat-option-inline';
+        optionButton.innerHTML = `${option.icon} ${option.text}`;
+        optionButton.addEventListener('click', () => {
+            // Add user's selection as a message
+            addMessage(option.text, false);
+            // Call the corresponding action
+            option.action();
+            // Remove the options after selection
+            optionsContainer.remove();
+        });
+        optionsContainer.appendChild(optionButton);
+    });
+
+    parentMessage.appendChild(optionsContainer);
+}
+
+function showWelcomeMessage() {
+    const welcomeMsg = addMessage("Hello! It's lovely to see you here 😊 What would you like to know about me?");
+    addOptions(welcomeMsg);
+}
+
+function showAboutMe() {
+    addMessage('I am a Product Manager with experience in building innovative solutions. I am passionate about creating products that make a difference.');
+    setTimeout(() => {
+        const followUpMsg = addMessage("Would you like to know more about me?");
+        addOptions(followUpMsg);
+    }, 1000);
+}
+
+function showSkills() {
+    const skills = [
+        '✨ Product Strategy',
+        '🔍 User Research',
+        '📊 Data Analytics',
+        '👥 Team Leadership',
+        '🎯 Agile Management'
+    ];
+    
+    skills.forEach((skill, index) => {
+        setTimeout(() => addMessage(skill), index * 500);
+    });
+
+    setTimeout(() => {
+        const followUpMsg = addMessage("What else would you like to know?");
+        addOptions(followUpMsg);
+    }, (skills.length + 1) * 500);
+}
+
+function showInterests() {
+    addMessage('My Interests:');
+    const interests = [
+        '📚 Technology Trends',
+        '🎨 User Experience Design',
+        '🌱 Sustainable Innovation'
+    ];
+
+    interests.forEach((interest, index) => {
+        setTimeout(() => addMessage(interest), (index + 1) * 500);
+    });
+
+    setTimeout(() => {
+        const followUpMsg = addMessage("Anything else you'd like to explore?");
+        addOptions(followUpMsg);
+    }, (interests.length + 2) * 500);
+}
+
+function showContact() {
+    addMessage('Get in touch with me:');
+    setTimeout(() => addMessage('📧 Email: your.email@example.com'), 500);
+    setTimeout(() => addMessage('🔗 LinkedIn: linkedin.com/in/yourprofile'), 1000);
+    
+    setTimeout(() => {
+        const followUpMsg = addMessage("Would you like to know anything else?");
+        addOptions(followUpMsg);
+    }, 1500);
+}
+
+// Initialize chat when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    showWelcomeMessage();
 }); 
